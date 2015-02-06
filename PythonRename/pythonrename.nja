@@ -1,0 +1,29 @@
+{
+  "mainFile": "C:/Users/7002815/Documents/Repos/PythonRename/PythonRename/Rename.py", 
+  "use-tabs": false, 
+  "venv": "", 
+  "relatedProjects": [], 
+  "name": "PythonRename", 
+  "license": "GNU General Public License v3", 
+  "url": "", 
+  "pythonPath": "C:\\Python34\\python.exe", 
+  "preExecScript": "", 
+  "additional_builtins": [], 
+  "programParams": "", 
+  "indentation": 4, 
+  "PYTHONPATH": "", 
+  "supported-extensions": [
+    ".py", 
+    ".html", 
+    ".jpg", 
+    ".png", 
+    ".ui", 
+    ".css", 
+    ".json", 
+    ".js", 
+    ".ini"
+  ], 
+  "project-type": "", 
+  "postExecScript": "", 
+  "description": "HW1"
+}
