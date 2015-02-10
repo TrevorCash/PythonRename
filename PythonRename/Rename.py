@@ -25,48 +25,32 @@ HELP_STRING = """ Rename Utility:\n
 
 
 def Process():
-    #TODO - Temporary shortcut for testing arguments
-    sys.argv = ["-h", "-v"]
-
-
-
-
-    #flags for for indicating whether currently in interactive/verbose mode
-    verboseOutput = False;
-    interactiveMode = False;
-
-    #print out full argument list
-    print("All Arguments: ", sys.argv)
-
-    for arg in (sys.argv):
-        arg = arg.lower();
-        print("current argument process: " + arg);
-
-        if(arg == ARG_PRINT_HELP[0]):
-            print(HELP_STRING)
-
-
-
-        elif(arg == ARG_VERBOSE_OUTPUT[0]):
-            verboseOutput = True;
-
-
-        elif(arg == ARG_INTERACTIVE_MODE[0]):
-            interactiveMode = True;
-
-        elif(arg == ARG_CONV_LOWERCASE[0]):
-            Print("TODO");
-
-        elif(arg == ARG_CONV_UPPERCASE[0]):
-            Print("TODO");
-
-        elif(arg == ARG_TRIM_CHARS[0]):
-            Print("TODO");
-
-        elif(arg == ARG_REPLACE_STRING[0]):
-            Print("TODO");
-
-
+    parser = argparse.ArgumentParser("-h for help")
+    
+    parser.add_argument('-v', '--verbose', action = "store_true", help = "Verbose Output")
+    parser.add_argument('-i', '--interactive', action = "store_true", help = "Interactive Mode confirms changes to each file")
+    parser.add_argument('-l', '--lowercase', action = "store_true", help = "Set filename to lowercase")
+    parser.add_argument('-u', '--uppercase', action = "store_true", help = "Set filename to uppercase")
+    parser.add_argument('-t', '--trim', type = int, metavar = 'N', help = "n > 0: remove n characters from start of filename \n n < 0: remove n characters from end of filename")
+    parser.add_argument('-r', '--replace', metavar = ('str1', 'str2'), type = str, nargs = 2, help = "replace all instances of str1 with str2")
+    parser.add_argument('-n', '--countstring', type = str, metavar = "countstring#", help = "#'s in countstring become numbers; e.g., ## becomes 01, 02, ...")
+    
+    parser.add_argument('filenames', metavar = 'filenames', type = str, nargs = '+', help = "filenames to modify")
+    
+    args = parser.parse_args()
+    
+    print( 'all args: ', sys.argv )
+    print( 'argparse: ', args )
+    print( 'args.verbose = ', args.verbose )
+    print( 'args.interactive = ', args.interactive )
+    print( 'args.lowercase = ', args.lowercase )
+    print( 'args.uppercase = ', args.uppercase )
+    print( 'args.trim = ', args.trim )
+    print( 'args.replace = ', args.replace )
+    print( 'args.countstring = ', args.countstring )
+    print( 'filenames = ', args.filenames )
+    
+    
     return
 
 
