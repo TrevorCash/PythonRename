@@ -2,6 +2,9 @@
 #Main Program Flow Code Here.....
 import sys
 import argparse
+import glob
+import os
+from RenameHelpers import *
 
 #define argument strings
 #touples (argstring, numinput args excpected)
@@ -39,22 +42,34 @@ def Process():
     
     args = parser.parse_args()
     
-    print( 'all args: ', sys.argv )
-    print( 'argparse: ', args )
-    print( 'args.verbose = ', args.verbose )
-    print( 'args.interactive = ', args.interactive )
-    print( 'args.lowercase = ', args.lowercase )
-    print( 'args.uppercase = ', args.uppercase )
-    print( 'args.trim = ', args.trim )
-    print( 'args.replace = ', args.replace )
-    print( 'args.countstring = ', args.countstring )
-    print( 'filenames = ', args.filenames )
+    sys.argv = sys.argv[1:len(sys.argv)] #chop off first argument, nobody cares about the filename
     
+    #now put the list of all the filenames the user wanted into args.filenames
+    args.filenames = GlobFilenames(args.filenames)
     
+    #iterate through each filename and perform the operations in order
+    for fname in args.filenames:
+        newFilename = GetNewFilename(str(fname[0]), args) #cast fname to str because its a list of 1 string
+        
+        if args.interactive == True:
+            #ask the user if they really want to change the file
+            message = 'Would you like to change \'' + str(fname[0]) + '\' to \'' + newFilename + '\'? [y/n]'
+            print(message, end = '')
+            if(input() == 'y'):
+                #rename the file
+                os.rename(str(fname[0]), newFilename)
+            else:
+                #do not rename the file or do the verbose statement
+                continue
+        if args.verbose == True:
+            #print out the previous and final filenames
+            message = '\'' + str(fname[0]) + '\' -> \'' + newFilename + '\''
+            print(message)
+            
     return
 
 
-
+    
 
 
 
