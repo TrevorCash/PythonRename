@@ -1,18 +1,57 @@
-#Rename
-#Main Program Flow Code Here.....
+###############################################################################
+# File: Rename.py
+#
+# Authors: Dylan Geyer, Trevor Cash
+#
+# Class: Programming Languages (CSC 461)
+#
+# Instructor: Dr. Weiss
+#
+# Description:  This file acts as the main() for our pyton file renaming prog.
+#               This file handles the command-line argument parsing and then
+#               calls its helper functions to do string manipulations on each
+#               filename. Once a filename has been processed it is renamed.
+#
+# Command-Line Arguments: -v - Verbose, prints previous and new filenames
+#                         -i - Interactive, aks user for permission each file
+#                         -h - Help, displays an in depth argument explanation
+#                         -l - Lowercase, convert filenames to lowercase
+#                         -u - Uppercase, convert filenames to uppercase
+#                         -t n - Trim, cut off characters from front/back
+#                                of a filename.
+#                         -r "str1" "str2" - Replace, replaces a pattern in
+#                             str1 with a pattern in str2
+#                         -n "CountString#" - Countstring, change all the
+#                             filenames to "CountString#" but number them in
+#                             increasing order for every name changed
+#
+# Date: 2/12/14
+#
+###############################################################################
 import sys
 import argparse
 import glob
 import os
 from RenameHelpers import *
 
+CountIncrementer = 0
 
 
-
-
+###############################################################################
+# Name: Process
+#
+# Description:  Acts as main() and parses all of the command line arguments.
+#               Calls a GetNewFilename function to figure out the new filename
+#               based on the command line arguments it parsed earlier. It then
+#               either asks the user if its ok to write the file or does it
+#               without asking (depending on passed in arguments).
+#
+# Parameters: none
+#
+# Returns:    none
+###############################################################################
 def Process():
-    print(sys.argv)
-
+    """Acts as the main function and handles command-line argument parsing, file re-naming."""
     parser = argparse.ArgumentParser("-h for help")
 
     parser.add_argument('-v', '--verbose', action = "store_true", help = "Verbose Output")
@@ -25,10 +64,11 @@ def Process():
 
     parser.add_argument('filenames', metavar="filenames", type = str, nargs = '*', help = "filenames to modify")
 
-    sys.argv = sys.argv[1:len(sys.argv)] #chop off first argument, nobody cares about the filename
+    
 
     args = parser.parse_args();
 
+    sys.argv = sys.argv[1:len(sys.argv)] #chop off first argument, nobody cares about the filename
 
     #now put the list of all the filenames the user wanted into args.filenames
 
@@ -47,21 +87,23 @@ def Process():
 
         if args.interactive == True:
             #ask the user if they really want to change the file
-            message = 'Would you like to change \'' + str(fname[0]) + '\' to \'' + newFilename + '\'? [y/n]'
+            message = 'Would you like to change \'' + fname + '\' to \'' + newFilename + '\'? [y/n]'
             print(message, end = '')
             if(input() == 'y'):
                 #rename the file
                 os.rename(fname, newFilename)
+                Rename.CountIncrementer = Rename.CountIncrementer + 1
             else:
                 #do not rename the file or do the verbose statement
                 continue
         else:
              #rename the file
              os.rename(fname, newFilename)
+             Rename.CountIncrementer = Rename.CountIncrementer + 1
 
         if args.verbose == True:
             #print out the previous and final filenames
-            message = '\'' + str(fname[0]) + '\' -> \'' + newFilename + '\''
+            message = '\'' + fname + '\' -> \'' + newFilename + '\''
             print(message)
 
     return
