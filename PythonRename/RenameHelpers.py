@@ -1,12 +1,16 @@
 import sys
 import glob
-import argparse
+import re
 
 def GlobFilenames( filenamelist ):
     newlist = [] #create a blank list to add to
     #iterate through each filename passed in
     for name in filenamelist:
-        newlist.append(glob.glob(name)) #glob the name so we can automatically get patterns
+        globedNames = glob.glob(name);
+        if(len(globedNames) > 0):
+            for singleGlob in globedNames:
+                newlist.append(singleGlob) #glob the name so we can automatically get patterns
+
     return newlist
 
 def GetNewFilename( filename, args ):
@@ -32,14 +36,14 @@ def GetNewFilename( filename, args ):
             #no action is taking, this argument likely pairs with a command
             filename = filename
     return filename
-    
+
 
 def ToLower( string ):
     return str.lower(string)
-    
+
 def ToUpper( string):
     return str.upper(string)
-    
+
 def TrimFilename(newFilename, args):
     if args.trim > 0:
         newFilename = newFilename[args.trim:]
@@ -47,8 +51,20 @@ def TrimFilename(newFilename, args):
         newFilename = newFilename[:args.trim]
     return newFilename
 
+
+
+""" Replaces the newfilename with a new name based of the matching pattern in the first argument,
+ and the destination format in the second argument, uses regular expression substitution """
 def ReplaceStrings(newFilename, args):
-    newFilename = '2'
+    firstArg = args.replace[0]
+    secondArg = args.replace[1]
+
+    pattern = firstArg
+
+    newFilename = re.sub(pattern, secondArg, newFilename)
+
+    return newFilename;
+
 
 def CountStrings(newFilename, args):
     newFilename = '3'

@@ -9,7 +9,7 @@
   "pythonPath": "C:\\Python34\\python.exe", 
   "preExecScript": "", 
   "additional_builtins": [], 
-  "programParams": "", 
+  "programParams": "-h, -r, Book (\\d) \u2013 Chapter (\\d\\d).*, LR_0\\1_\\2.mp3", 
   "indentation": 4, 
   "PYTHONPATH": "", 
   "supported-extensions": [
