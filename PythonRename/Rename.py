@@ -32,6 +32,7 @@ import sys
 import argparse
 import glob
 import os
+import os.path
 from RenameHelpers import *
 
 CountIncrementer = 0
@@ -79,10 +80,17 @@ def Process():
                 args.filenames += [potentialFile]
     else:
                args.filenames += GlobFilenames(args.filenames)
+               
 
-
+    #remove duplicate filenames in the list 
+    args.filenames = list(set(args.filenames))
+      
     #iterate through each filename and perform the operations in order
     for fname in args.filenames:
+        #make sure file exists before changing its name
+        if os.path.isfile(fname) == False:
+            continue
+            
         newFilename = GetNewFilename(fname, args) #cast fname to str because its a list of 1 string
 
         if args.interactive == True:
