@@ -1,4 +1,4 @@
-###############################################################################
+"""############################################################################
 # File: RenameHelpers.py
 #
 # Authors: Dylan Geyer, Trevor Cash
@@ -13,7 +13,7 @@
 #
 # Date: 2/12/15
 #
-###############################################################################
+############################################################################"""
 
 import sys
 import glob
@@ -21,7 +21,7 @@ import re
 import Rename
 
 
-###############################################################################
+"""############################################################################
 # Name: GlobFilenames
 #
 # Description:  This function will look at each filename argument passed to the
@@ -31,7 +31,7 @@ import Rename
 # Parameters: filenameList - List of each filename passed in from command line
 #
 # Returns:  newlist - list of all of the files found by globbing
-###############################################################################
+############################################################################"""
 def GlobFilenames( filenamelist ):
     """Returns a list of filenames globbed from the few passed in."""
     newlist = [] #create a blank list to add to
@@ -44,12 +44,12 @@ def GlobFilenames( filenamelist ):
 
     return newlist
 
-###############################################################################
+"""############################################################################
 # Name: GetNewFilename
 #
 # Description:  This function will determien what the new filename should be
 #               depending on which argument flags were passed in. It looks at
-#               at the arguments in order so a "-l -u" will set a filename to 
+#               at the arguments in order so a "-l -u" will set a filename to
 #               lowercase then uppercase. This function is relatively modular
 #               as it calls a specific function to handle each different flag
 #
@@ -57,7 +57,7 @@ def GlobFilenames( filenamelist ):
 #                 args - list of all of the command line flags and arguments
 #
 # Returns:  newFilename - processed filename according to argument flags
-###############################################################################
+############################################################################"""
 def GetNewFilename( filename, args ):
     """Returns a modified filename based on command line arguments, and their order."""
     #string operations are done in the order they were entered
@@ -83,7 +83,7 @@ def GetNewFilename( filename, args ):
             filename = filename
     return filename
 
-###############################################################################
+"""############################################################################
 # Name: ToLower
 #
 # Description:  Uses the string class function to set all characters to lowercase
@@ -91,12 +91,12 @@ def GetNewFilename( filename, args ):
 # Parameters: string - string object to be set to lowercase
 #
 # Returns:  string - a lowercase version of the string passed in
-###############################################################################
+############################################################################"""
 def ToLower( string ):
     """Converts a filename to all lowercase, including extension."""
     return str.lower(string)
 
-###############################################################################
+"""############################################################################
 # Name: ToUpper
 #
 # Description:  Uses the string class function to set all characters to uppercase
@@ -104,12 +104,12 @@ def ToLower( string ):
 # Parameters: string - string object to be set to uppercase
 #
 # Returns:  string - an uppercase version of the string passed in
-###############################################################################
+############################################################################"""
 def ToUpper( string):
     """Converts a filename to all uppercase, including extension."""
     return str.upper(string)
 
-###############################################################################
+"""############################################################################
 # Name: TrimFilename
 #
 # Description:  This function will chop characters off the front/back of a
@@ -121,7 +121,7 @@ def ToUpper( string):
 #                    args - contains all command line arguments (-t n)
 #
 # Returns:  newFilename - final trimmed version of the filename
-###############################################################################
+############################################################################"""
 def TrimFilename(newFilename, args):
     """Removes characters from start/end of a filename."""
     if args.trim > 0:
@@ -130,7 +130,7 @@ def TrimFilename(newFilename, args):
         newFilename = newFilename[:args.trim]
     return newFilename
 
-###############################################################################
+"""############################################################################
 # Name: ReplaceStrings
 #
 # Description:  This function uses the RegEx module to replace a pattern in the
@@ -140,7 +140,7 @@ def TrimFilename(newFilename, args):
 #                    args - command line args containing both patterns
 #
 # Returns:  newFilename - process filename containing replaced patterns
-###############################################################################
+############################################################################"""
 def ReplaceStrings(newFilename, args):
     """Uses RE sub to replace one pattern in a filename with another."""
     firstArg = args.replace[0]
@@ -152,7 +152,7 @@ def ReplaceStrings(newFilename, args):
 
     return newFilename
 
-###############################################################################
+"""############################################################################
 # Name: CountStrings
 #
 # Description:  Uses the RegEx module to replace all '#' characters with the
@@ -166,7 +166,7 @@ def ReplaceStrings(newFilename, args):
 #                    args - command line args containing the CountString with '#'s
 #
 # Returns:  string - processed filename with an incremented #
-###############################################################################
+############################################################################"""
 def CountStrings(newFilename, args):
     """Uses RE sub to replace '#' with an increasing counter."""
     Cstring = args.countstring
@@ -174,7 +174,7 @@ def CountStrings(newFilename, args):
     if re.search(r'#+') == False:
         print('Improperly formatted CountString (No \'#\' characters)')
         return newFilename
-        
+
     #replace how every many '#' appear in a row with the increment number
     newFilename = re.sub(r'#+', str(Rename.CountIncrementer), Cstring)
     return newFilename

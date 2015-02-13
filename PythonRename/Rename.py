@@ -1,4 +1,4 @@
-###############################################################################
+"""############################################################################
 # File: Rename.py
 #
 # Authors: Dylan Geyer, Trevor Cash
@@ -27,7 +27,7 @@
 #
 # Date: 2/12/14
 #
-###############################################################################
+############################################################################"""
 import sys
 import argparse
 import glob
@@ -38,7 +38,7 @@ from RenameHelpers import *
 CountIncrementer = 0
 
 
-###############################################################################
+"""############################################################################
 # Name: Process
 #
 # Description:  Acts as main() and parses all of the command line arguments.
@@ -50,7 +50,7 @@ CountIncrementer = 0
 # Parameters: none
 #
 # Returns:    none
-###############################################################################
+############################################################################"""
 def Process():
     """Acts as the main function and handles command-line argument parsing, file re-naming."""
     parser = argparse.ArgumentParser("-h for help")
@@ -65,7 +65,7 @@ def Process():
 
     parser.add_argument('filenames', metavar="filenames", type = str, nargs = '*', help = "filenames to modify")
 
-    
+
 
     args = parser.parse_args();
 
@@ -80,17 +80,17 @@ def Process():
                 args.filenames += [potentialFile]
     else:
                args.filenames += GlobFilenames(args.filenames)
-               
 
-    #remove duplicate filenames in the list 
+
+    #remove duplicate filenames in the list
     args.filenames = list(set(args.filenames))
-      
+
     #iterate through each filename and perform the operations in order
     for fname in args.filenames:
         #make sure file exists before changing its name
         if os.path.isfile(fname) == False:
             continue
-            
+
         newFilename = GetNewFilename(fname, args) #cast fname to str because its a list of 1 string
 
         if args.interactive == True:
